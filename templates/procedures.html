@@ -1,0 +1,69 @@
+<html>
+    <title>Requirements & Procedure - ABC Embassy</title>
+    <link rel="stylesheet" href="static/css/styles.css">
+</head>
+
+<body bgcolor="#6CA3E7">
+    
+    {% if token == 'loggedout' %}
+        <nav>
+            <ul>
+                <li>
+                    <h2 class="logo">ABC Passport Application Services</h2>
+                </li>
+                <li><a href="{{ url_for('home') }}">Home</a></li>
+                <li><a href="{{ url_for('home') }}">About & Documentation</a></li>
+                <li><a href="{{ url_for('procedures') }}">Process</a></li>
+                <div class="dropdown">
+                    <button class="dropbtn">Sign In ▼
+                        <i></i>
+                    </button>
+                    <div class="dropdown-content">
+                        <a href="{{ url_for('userlogin') }}">User Login</a>
+                        <a href="{{ url_for('adminlogin') }}">Admin Login</a>
+                        <a href="{{ url_for('signup') }}">No Account? Sign Up</a>
+
+                    </div>
+                </div>
+            </ul>
+        </nav>
+
+        {% elif token != 'loggedout' %}
+            <nav>
+                <ul>
+                    <li>
+                      <h2 class="logo">ABC Passport Application Services</h2>
+                    </li>
+                    <li><a href="{{ url_for('home') }}">Home</a></li>
+                    <li><a href="{{ url_for('home') }}">About & Documentation</a></li>
+                    <li><a href="{{ url_for('procedures') }}">Process</a></li>
+                    <li><a href="{{ url_for('logout') }}">Sign Out</a></li>
+                
+                </ul>
+            </nav>
+
+        {% endif %}
+
+    <br><br><br<br>
+    <marquee scrollamount=10>
+        <p class="marqueetext"> Welcome to the ABC Embassy's Passport application page. Some services may not
+            function due to COVID-19 circumstances, we thank you for understanding. </p>
+    </marquee>
+
+    <h2 class="headings">Procedure : How To Use This Service? As Simple As 3 Steps!</h2>
+    <ol  class="footer" align="center"><li>Create your account</li><br><li>Click the apply now button</li><br><li>Submit your application!</li></ol></p>
+
+    <br> <br> <br>
+
+    
+
+    
+    <br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
+   
+    <footer>
+        <p class="footer">Done by Roshan Raj Saravanan, Class 12-A(M), GR No. 5799</p>
+    </footer>
+
+</body>
+
+</html>

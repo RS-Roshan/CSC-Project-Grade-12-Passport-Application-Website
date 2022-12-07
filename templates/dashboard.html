@@ -1,0 +1,99 @@
+<html>
+<head>
+   
+    <title>Your Dashboard</title>
+    <link rel="stylesheet" href="static/css/styles.css">
+</head>
+
+<body bgcolor="#6CA3E7">
+    
+    {% if token == 'loggedout' %}
+        <nav>
+            <ul>
+                <li>
+                    <h2 class="logo">ABC Passport Application Services</h2>
+                </li>
+                <li><a href="{{ url_for('home') }}">Home</a></li>
+                <li><a href="{{ url_for('docs') }}">About & Documentation</a></li>
+                <li><a href="{{ url_for('procedures') }}">Process</a></li>
+                <div class="dropdown">
+                    <button class="dropbtn">Sign In ▼
+                        <i></i>
+                    </button>
+                    <div class="dropdown-content">
+                        <a href="{{ url_for('userlogin') }}">User Login</a>
+                        <a href="{{ url_for('adminlogin') }}">Admin Login</a>
+                        <a href="{{ url_for('signup') }}">No Account? Sign Up</a>
+
+                    </div>
+                </div>
+            </ul>
+        </nav>
+
+        {% elif token != 'loggedout' %}
+            <nav>
+                <ul>
+                    <li>
+                      <h2 class="logo">ABC Passport Application Services</h2>
+                    </li>
+                    <li><a href="{{ url_for('home') }}">Home</a></li>
+                    <li><a href="{{ url_for('docs') }}">About & Documentation</a></li>
+                    <li><a href="{{ url_for('procedures') }}">Process</a></li>
+                    <li><a href="{{ url_for('logout') }}">Sign Out</a></li>
+                
+                </ul>
+            </nav>
+
+        {% endif %}
+
+    <br><br><br>
+
+
+    <p class="headings" align="center">Your Dashboard - View & Manage Your Applications </p>
+            
+    {% if token == 'loggedout' %}
+        <br><br><br>
+        <p class="headings" align="center"> {{msg}} </p>
+    
+    {% elif token.startswith('U') %}
+    <br><br>
+        {% if applications|length > 0 %}
+            <ul class="aligncards"></ul>
+            {% for a in applications %}
+            <li style="list-style-type: none;">
+            <div class="appcard">
+
+                <p class="cardheading">{{a[5] + ' Passport Application'}}</p>
+                <p class="cardtext">Application ID : {{a[0]}}</p>
+                <p class="cardtext">Applicant Name : {{a[8] + ' ' + a[9]}}</p>
+                {% if a[3] == "Pending" %}
+                    <p class="cardtext"><font color="yellow">{{a[3]}}</font>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;{{a[1]}}&nbsp; &nbsp; <form action="{{ url_for('cancel')}}" method="POST"><button class="cancelbtn" type="submit" name="cancel" value="{{a[0]}}"><font color="red">Cancel This Application</font></button></form></p>
+                {% elif a[3] == "Cancelled" %}
+                    <p class="cardtext"><font color="orange">{{a[3]}}</font>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;{{a[1]}} </p>
+                
+                {% elif a[3] == "Approved, Processing" %}
+                    <p class="cardtext"><font color="LightGreen">{{a[3]}}</font>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;{{a[1]}} </p>
+                
+                {% elif a[3] == "Rejected" %}
+                    <p class="cardtext"><font color="red">{{a[3]}}</font>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;{{a[1]}} </p>
+                {% endif %}
+            </div>
+            <br> <br> <br>
+            </li>
+            {% endfor %}
+            </ul>
+
+        {% else %}
+        <br><br><br>
+        <p class="headings" align="center"> You Have No Applications </p>
+        
+        {% endif %}
+            
+       
+        
+    {% endif %}
+        
+
+</body>
+
+</html>

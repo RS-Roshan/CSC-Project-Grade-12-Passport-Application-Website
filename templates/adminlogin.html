@@ -1,0 +1,66 @@
+<html>
+  <head>
+    <title>ABC Admin/Employee Login</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="static/css/styles.css" rel="stylesheet">
+  </head>
+  <body bgcolor="#6CA3E7">
+    {% if token == 'loggedout' %}
+        <nav>
+            <ul>
+                <li>
+                    <h2 class="logo">ABC Passport Application Services</h2>
+                </li>
+                <li><a href="{{ url_for('home') }}">Home</a></li>
+                <li><a href="{{ url_for('docs') }}">About & Documentation</a></li>
+                <li><a href="{{ url_for('procedures') }}">Process</a></li>
+                <div class="dropdown">
+                    <button class="dropbtn">Sign In ▼
+                        <i></i>
+                    </button>
+                    <div class="dropdown-content">
+                        <a href="{{ url_for('userlogin') }}">User Login</a>
+                        <a href="{{ url_for('adminlogin') }}">Admin Login</a>
+                        <a href="{{ url_for('signup') }}">No Account? Sign Up</a>
+
+                    </div>
+                </div>
+            </ul>
+        </nav>
+
+        {% elif token != 'loggedout' %}
+            <nav>
+                <ul>
+                    <li>
+                      <h2 class="logo">ABC Passport Application Services</h2>
+                    </li>
+                    <li><a href="{{ url_for('home') }}">Home</a></li>
+                    <li><a href="{{ url_for('docs') }}">About & Documentation</a></li>
+                    <li><a href="{{ url_for('procedures') }}">Process</a></li>
+                    <li><a href="{{ url_for('logout') }}">Sign Out</a></li>
+                
+                </ul>
+            </nav>
+
+        {% endif %}
+
+
+        <br> 
+        <h2 align="center" class="headings">Sign in to your ABC Embassy Employee account</h2>
+        <br><br>  
+          <form action="{{ url_for('adminlogin') }}" method="post" align="center" class="loginbox">
+            <br><br>
+            <div class="err">{{ error }}</div>
+            <br> 
+              <label for="username" class="footer" align="left"><b>Admin Username</label></b><br><br>
+              <input id="username" name="username" type="text" placeholder="Enter admin username" class="inputbox" required></br></br>
+              <label for="password" class="footer" align="left"><b>Admin Password</label></b><br><br>
+              <input id="password" name="password" type="password" placeholder="Enter admin password" class="inputbox" required></br></br></br>
+              <input type="submit" class="btn" value="Sign In" class="loginbutton"><br><br>
+              <label for="noacc" class="footer">For Admins only.<br>If you are a user, login <a href="{{ url_for('userlogin') }}">here</a></label><br><br><br>
+            </form>
+          <br> <br> <br> <br> <br> <br> <br> <br> <br> <br> <br> <br> <br> <br><br> <br><br> <br><br> <br><br> <br>
+        
+      
+  </body>
+</html>

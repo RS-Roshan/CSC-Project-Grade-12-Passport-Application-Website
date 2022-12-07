@@ -1,0 +1,70 @@
+<html>
+  <head>
+    <title>Create ABC Account</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="static/css/styles.css" rel="stylesheet">
+  </head>
+  <body bgcolor="#6CA3E7">
+    {% if token == 'loggedout' %}
+        <nav>
+            <ul>
+                <li>
+                    <h2 class="logo">ABC Passport Application Services</h2>
+                </li>
+                <li><a href="{{ url_for('home') }}">Home</a></li>
+                <li><a href="{{ url_for('docs') }}">About & Documentation</a></li>
+                <li><a href="{{ url_for('procedures') }}">Process</a></li>
+                <div class="dropdown">
+                    <button class="dropbtn">Sign In ▼
+                        <i></i>
+                    </button>
+                    <div class="dropdown-content">
+                        <a href="{{ url_for('userlogin') }}">User Login</a>
+                        <a href="{{ url_for('adminlogin') }}">Admin Login</a>
+                        <a href="{{ url_for('signup') }}">No Account? Sign Up</a>
+
+                    </div>
+                </div>
+            </ul>
+        </nav>
+
+        {% elif token != 'loggedout' %}
+            <nav>
+                <ul>
+                    <li>
+                      <h2 class="logo">ABC Passport Application Services</h2>
+                    </li>
+                    <li><a href="{{ url_for('home') }}">Home</a></li>
+                    <li><a href="{{ url_for('docs') }}">About & Documentation</a></li>
+                    <li><a href="{{ url_for('procedures') }}">Process</a></li>
+                    <li><a href="{{ url_for('logout') }}">Sign Out</a></li>
+                
+                </ul>
+            </nav>
+
+        {% endif %}
+
+
+        <br> <br>
+        <h2 align="center" class="headings">Create your ABC Embassy account</h2>
+        <br><br>  
+          <form action="{{ url_for('signup') }}" method="post" align="center" class="signupbox">
+            <br><br>
+            <div class="err">{{ error }}</div>
+            <br> <br> 
+              <label for="email" class="footer" align="left"><b>Enter your email address</label></b><br><br>
+              <input id="email" name="email" type="text" placeholder="Enter email" class="inputbox" required><br><br>
+              <label for="username" class="footer" align="left"><b>Pick a username</label></b><br><br>
+              <input id="username" name="username" type="text" placeholder="Enter username" class="inputbox" required><br><br>
+              <label for="password" class="footer" align="left"><b>Create a secure password</label></b><br><br>
+              <input id="password" name="password" type="password" placeholder="Enter password" class="inputbox" required><br><br>
+              <label for="cpassword" class="footer" align="left"><b>Confirm password</label></b><br><br>
+              <input id="cpassword" name="cpassword" type="password" placeholder="Re-enter password" class="inputbox" required><br><br><br>
+              <input type="submit" class="btn" value="Sign Up" class="loginbutton"></br></br>
+          </form>
+          <br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
+        <p class="footer">Already have an account ? Sign in<a href="/userlogin"> here</a></h3>
+          <bR><br><br><br>
+      
+  </body>
+</html>

@@ -1,0 +1,93 @@
+<html>
+<head>
+   
+    <title>View Details</title>
+    <link rel="stylesheet" href="static/css/styles.css">
+</head>
+
+<body bgcolor="#6CA3E7">
+    
+    {% if token == 'loggedout' %}
+        <nav>
+            <ul>
+                <li>
+                    <h2 class="logo">ABC Passport Application Services</h2>
+                </li>
+                <li><a href="{{ url_for('home') }}">Home</a></li>
+                <li><a href="{{ url_for('docs') }}">About & Documentation</a></li>
+                <li><a href="{{ url_for('procedures') }}">Process</a></li>
+                <div class="dropdown">
+                    <button class="dropbtn">Sign In ▼
+                        <i></i>
+                    </button>
+                    <div class="dropdown-content">
+                        <a href="{{ url_for('userlogin') }}">User Login</a>
+                        <a href="{{ url_for('adminlogin') }}">Admin Login</a>
+                        <a href="{{ url_for('signup') }}">No Account? Sign Up</a>
+
+                    </div>
+                </div>
+            </ul>
+        </nav>
+
+    {% elif token != 'loggedout' %}
+            <nav>
+                <ul>
+                    <li>
+                      <h2 class="logo">ABC Passport Application Services</h2>
+                    </li>
+                    <li><a href="{{ url_for('home') }}">Home</a></li>
+                    <li><a href="{{ url_for('docs') }}">About & Documentation</a></li>
+                    <li><a href="{{ url_for('procedures') }}">Process</a></li>
+                    <li><a href="{{ url_for('logout') }}">Sign Out</a></li>
+                
+                </ul>
+            </nav>
+
+
+        <br> <br>
+        <h2 align="center" class="headings">View Application Details</h2>
+        <br><br>  
+        {% if applications|length > 0 %}
+            <table border=1 class="atable">
+                <tr><th>Application ID</th><td><b>{{applications[0]}}</b></td> </tr>
+
+                <tr><th>Date Applied</th><td>{{applications[1]}}</td></tr>
+                <tr><th>Applicant Name</th><td>{{applications[8] ~ ' ' ~ applications[9]}}</td></tr>
+                <tr><th>Application Type</th><td>{{applications[4] ~ ' Passport'}}</td></tr>
+                <tr>
+                    <th>Application Status</th>
+                    {% if applications[3] == "Pending" %}
+                            <td><font color="yellow"><b>{{applications[3]}}</b></font> </td>
+                    {% elif applications[3] == "Cancelled" %}
+                        <td><font color="orange"><b>{{applications[3]}}</b></font></td>
+                        
+                    {% elif applications[3] == "Approved, Processing" %}
+                        <td><font color="LightGreen"><b>{{applications[3]}}</b></font></td>
+                    
+                    {% elif applications[3] == "Rejected" %}
+                        <td><font color="red"><b>{{applications[3]}}</b></font></td>
+                        
+                    {% endif %}
+                </tr>
+                <tr><th>Country Of Citizenship</th><td>{{applications[5]}}</td></tr>
+                <tr><th>New or Renewing</th><td>{{applications[6]}}</td></tr>
+                <tr><th>Date Of Birth (YYYY-MM-DD)</th><td>{{applications[10]}}</td></tr>
+                <tr><th>Parent/ Legal Guardian 1 Name </th><td>{{applications[11]}}</td></tr>
+                <tr><th>Parent/ Legal Guardian 2 Name</th><td>{{applications[12]}}</td></tr>
+                <tr><th>Spouse Name</th><td>{{applications[13]}}</td></tr>
+                <tr><th>Occupation</th><td>{{applications[14]}}</td></tr>
+                <tr><th>Address</th><td>{{applications[15]}}</td></tr>
+                <tr><th>Region</th><td>{{applications[16]}}</td></tr>
+            </table>
+             
+        {% else %}
+            <h2 align="center" class="headings">No Applications At The Moment</h2>
+        
+        {% endif %}
+            
+        <br> <br><br><br>
+       
+    {% endif %}
+    </body>
+</html>

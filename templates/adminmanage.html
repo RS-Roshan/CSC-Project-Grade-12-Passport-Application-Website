@@ -1,0 +1,110 @@
+<html>
+  <head>
+    <title>Admin Hub</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="static/css/styles.css" rel="stylesheet">
+  </head>
+  <body bgcolor="#6CA3E7">
+    {% if token == 'loggedout' %}
+        <nav>
+            <ul>
+                <li>
+                    <h2 class="logo">ABC Passport Application Services</h2>
+                </li>
+                <li><a href="{{ url_for('home') }}">Home</a></li>
+                <li><a href="{{ url_for('docs') }}">About & Documentation</a></li>
+                <li><a href="{{ url_for('procedures') }}">Process</a></li>
+                <div class="dropdown">
+                    <button class="dropbtn">Sign In ▼
+                        <i></i>
+                    </button>
+                    <div class="dropdown-content">
+                        <a href="{{ url_for('userlogin') }}">User Login</a>
+                        <a href="{{ url_for('adminlogin') }}">Admin Login</a>
+                        <a href="{{ url_for('signup') }}">No Account? Sign Up</a>
+
+                    </div>
+                </div>
+            </ul>
+        </nav>
+        <br><br>
+        <h2 align="center" class="headings">{{msg}}</h2>
+
+    {% elif token != 'loggedout' %}
+            <nav>
+                <ul>
+                    <li>
+                      <h2 class="logo">ABC Passport Application Services</h2>
+                    </li>
+                    <li><a href="{{ url_for('home') }}">Home</a></li>
+                    <li><a href="{{ url_for('docs') }}">About & Documentation</a></li>
+                    <li><a href="{{ url_for('procedures') }}">Process</a></li>
+                    <li><a href="{{ url_for('logout') }}">Sign Out</a></li>
+                
+                </ul>
+            </nav>
+            {% if token.startswith('A') %}
+                <br> <br>
+                <h2 align="center" class="headings">Admin Center - Manage User Applications</h2>
+                <br><br>  
+                {% if applications|length > 0 %}
+                    <table border=1 class="atable">
+                        <tr>
+                            <th>Application ID</th>
+                            <th>Date Applied</th>
+                            <th>Applicant Name</th>
+                            <th>Application Type</th>
+                            <th>Application Status</th>
+                            <th>Admin Actions</th>
+                        </tr>
+
+                        {% for a in applications %}
+                            <tr>
+                                <td><b>{{a[0]}}</b></td>
+                                <td>{{a[1]}}</td>
+                                <td>{{a[8] + ' ' + a[9]}}</td>
+                                <td>{{a[4] + ' Passport'}}</td>
+            
+                                {% if a[3] == "Pending" %}
+                                    <td><font color="yellow"><b>{{a[3]}}</b></font> </td>
+                                {% elif a[3] == "Cancelled" %}
+                                    <td><font color="orange"><b>{{a[3]}}</b></font></td>
+                                    
+                                {% elif a[3] == "Approved, Processing" %}
+                                    <td><font color="LightGreen"><b>{{a[3]}}</b></font></td>
+                                
+                                {% elif a[3] == "Rejected" %}
+                                    <td><font color="red"><b>{{a[3]}}</b></font></td>
+                                    
+                                {% endif %}
+
+                                {% if a[3] == "Pending" %}
+                                
+                                    <td><form action="{{ url_for('view')}}" method="POST"><button type="submit" name="view" value="{{a[0]}}" class="abtn">VIEW DETAILS</button></form><form action="{{ url_for('adminmanage')}}" method="POST"><button type="submit" name="approve" value="{{a[0]}}" class="abtn"><font color='LightGreen'>APPROVE</font> </button> <button type="submit" name="reject" value="{{a[0]}}" class="abtn"><font color=red>REJECT</font></form></td>
+                                {% elif a[3] == "Cancelled" %}
+                                    
+                                    <td><form action="{{ url_for('adminmanage')}}" method="POST"><button type="submit" name="delete" value="{{a[0]}}" class="abtn"><font color=orange>DELETE FROM DATABASE</font></button></form></td>
+                                {% elif a[3] == "Approved, Processing" %}
+                                    
+                                <td><form action="{{ url_for('adminmanage')}}" method="POST"><button type="submit" name="delete" value="{{a[0]}}" class="abtn"><font color=orange>DELETE FROM DATABASE</font></button></form></td>
+                                {% elif a[3] == "Rejected" %}
+                                    
+                                    <td><form action="{{ url_for('adminmanage')}}" method="POST"><button type="submit" name="delete" value="{{a[0]}}" class="abtn"><font color=orange>DELETE FROM DATABASE</font></button></form></td>
+                                {% endif %}
+                            </tr>
+                        {% endfor %}
+                        
+                {% else %}
+                    <h2 align="center" class="headings">No Applications At The Moment</h2>
+                {% endif %}
+                        
+            {% else %}
+                <br> <br>
+                
+
+            {% endif %}
+    {% endif %}
+    <br><br><br>
+
+  </body>
+</html>
